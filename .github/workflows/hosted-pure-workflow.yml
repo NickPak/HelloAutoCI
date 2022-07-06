@@ -59,7 +59,7 @@ jobs:
           cmake --build --preset ninja-multi-vcpkg-debug
       - name: GZip
         run: |
-          ls -l ${sourceDir}/builds/${presetName}
+          ls -l
           mkdir HelloAutoCI-${{ matrix.os }}
           cp Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
