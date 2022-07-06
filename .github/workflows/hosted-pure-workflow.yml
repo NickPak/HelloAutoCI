@@ -63,9 +63,10 @@ jobs:
           mkdir HelloAutoCI-${{ matrix.os }}
           cp ./builds/ninja-multi-vcpkg/Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
-      - name: Upload to release
-        uses: JasonEtco/upload-to-release@master
+      - name: Simple Upload to Release
+        uses: Guerra24/upload-to-release@v1.0.0
         with:
-          args: HelloAutoCI-${{ matrix.os }}.tar.gz application/x-gzip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: my-artifact
+          path: HelloAutoCI-${{ matrix.os }}.tar.gz
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          content-type: application/x-gzip
