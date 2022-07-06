@@ -59,6 +59,7 @@ jobs:
         uses: Guerra24/upload-to-release@v1.0.0
         with:
           name: my-artifact
+          id: my-artifact
           path: HelloAutoCI-${{ matrix.os }}.tar.gz
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           content-type: application/x-gzip
