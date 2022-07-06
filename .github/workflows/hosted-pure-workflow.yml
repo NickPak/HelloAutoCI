@@ -59,11 +59,17 @@ jobs:
           mkdir HelloAutoCI-${{ matrix.os }}
           cp ./builds/ninja-multi-vcpkg/Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
-      - name: Upload GitHub release assets
-        uses: vesoft-inc/upload-assets@v1.0.0
+      - name: Upload
+        uses: djn24/add-asset-to-release@v1
         with:
-          asset-path: HelloAutoCI-${{ matrix.os }}.tar.gz
-          tag: v1.0.1
+          token: ${{secrets.GITHUB_TOKEN}}
+          path: HelloAutoCI-${{ matrix.os }}.tar.gz
+#      - name: Upload GitHub release assets
+#        uses: vesoft-inc/upload-assets@v1.0.0
+#        with:
+#          asset-path: HelloAutoCI-${{ matrix.os }}.tar.gz
+#          tag: v1.0.1
+
 #      - name: Upload binaries to release
 #        uses: termux/upload-release-action@v3.0.3
 #        with:
