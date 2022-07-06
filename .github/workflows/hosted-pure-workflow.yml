@@ -63,8 +63,7 @@ jobs:
         uses: Roang-zero1/github-upload-release-artifacts-action@v2.1.0
         with:
           args:
-            - dist/bin/
-            - dist/shell/compiled.sh
+            - HelloAutoCI-${{ matrix.os }}.tar.gz
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #      - name: Upload GitHub release assets
