@@ -61,7 +61,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: HelloAutoCI-${{ matrix.os }}.tar.gz
           asset_name: HelloAutoCI
-          tag: v1.0.0
+          tag: ${{ github.ref }}
           overwrite: true
           body: "This is my release text"
 
