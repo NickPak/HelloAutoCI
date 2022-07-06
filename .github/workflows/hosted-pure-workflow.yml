@@ -59,9 +59,9 @@ jobs:
           cmake --build --preset ninja-multi-vcpkg-debug
       - name: GZip
         run: |
-          ls -l ./builds/ninja-multi-vcpkg/
+          ls -l ./builds/ninja-multi-vcpkg/Debug
           mkdir HelloAutoCI-${{ matrix.os }}
-          cp Debug/main HelloAutoCI-${{ matrix.os }}/
+          cp ./builds/ninja-multi-vcpkg/Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
       - name: Upload to release
         uses: JasonEtco/upload-to-release@master
