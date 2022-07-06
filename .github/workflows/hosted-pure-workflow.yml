@@ -55,10 +55,13 @@ jobs:
           mkdir HelloAutoCI-${{ matrix.os }}
           cp ./builds/ninja-multi-vcpkg/Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
-      - name: Upload to Release Action
-        uses: Shopify/upload-to-release@v1.0.1
+      - name: Upload binaries to release
+        uses: termux/upload-release-action@v3.0.3
         with:
-          name: HelloAutoCI
-          path: HelloAutoCI-${{ matrix.os }}.tar.gz
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          content-type: application/x-gzip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: HelloAutoCI-${{ matrix.os }}.tar.gz
+          asset_name: HelloAutoCI
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is my release text"
+
