@@ -55,11 +55,10 @@ jobs:
           mkdir HelloAutoCI-${{ matrix.os }}
           cp ./builds/ninja-multi-vcpkg/Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
-      - name: Simple Upload to Release
-        uses: Guerra24/upload-to-release@v1.0.0
+      - name: Upload to Release Action
+        uses: Shopify/upload-to-release@v1.0.1
         with:
-          name: my-artifact
-          id: my-artifact
+          name: HelloAutoCI
           path: HelloAutoCI-${{ matrix.os }}.tar.gz
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           content-type: application/x-gzip
