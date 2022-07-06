@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ ubuntu-latest, macos-latest ]
         include:
           - os: ubuntu-latest
             triplet: x64-linux
@@ -38,11 +38,11 @@ jobs:
       # Setup the build machine with the most recent versions of CMake and Ninja. Both are cached if not already: on subsequent runs both will be quickly restored from GitHub cache service.
       - uses: lukka/get-cmake@latest
 
-#      - name: Set up GCC
-#        uses: egor-tensin/setup-gcc@v1
-#        with:
-#          version: latest
-#          platform: x64
+      #      - name: Set up GCC
+      #        uses: egor-tensin/setup-gcc@v1
+      #        with:
+      #          version: latest
+      #          platform: x64
 
       # Run CMake to generate Ninja project files, using the vcpkg's toolchain file to resolve and install the dependencies as specified in vcpkg.json.
       - name: Install dependencies and generate project files
@@ -59,13 +59,21 @@ jobs:
           mkdir HelloAutoCI-${{ matrix.os }}
           cp ./builds/ninja-multi-vcpkg/Debug/main HelloAutoCI-${{ matrix.os }}/
           tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
-      - name: GitHub Upload Release Artifacts
-        uses: Roang-zero1/github-upload-release-artifacts-action@v2.1.0
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.2.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release binary
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args:
-            - HelloAutoCI-${{ matrix.os }}.tar.gz
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ./HelloAutoCI-${{ matrix.os }}.tar.gz
+          asset_name: HelloAutoCI
+          asset_content_type: application/octet-stream
 #      - name: Upload GitHub release assets
 #        uses: vesoft-inc/upload-assets@v1.0.0
 #        with:
