@@ -57,8 +57,14 @@ jobs:
       - name: Build (Debug)
         run: |
           cmake --build --preset ninja-multi-vcpkg-debug
-
-      # Test the whole project with CTest.
-      - name: Test (Debug)
+      - name: GZip
         run: |
-          ctest --preset ninja-multi-vcpkg-debug
+          mkdir HelloAutoCI-${{ matrix.os }}
+          cp Debug/main HelloAutoCI-${{ matrix.os }}/
+          tar -czvf HelloAutoCI-${{ matrix.os }}.tar.gz HelloAutoCI-${{ matrix.os }}
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: HelloAutoCI-${{ matrix.os }}.tar.gz application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
